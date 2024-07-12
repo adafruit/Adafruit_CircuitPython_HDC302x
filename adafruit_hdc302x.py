@@ -87,10 +87,9 @@ class HDC302x:
     def heater(self) -> bool:
         """
         Heater power. Can be set to:
-        "OFF"
-        "QUARTER_POWER"
-        "HALF_POWER"
-        "FULL_POWER"
+
+        "OFF", "QUARTER_POWER",
+        "HALF_POWER", "FULL_POWER"
 
         :return: True if the heater is on, False otherwise.
         """
@@ -152,7 +151,9 @@ class HDC302x:
     @property
     def auto_mode(self) -> int:
         """
-        Auto mode for measurements. Options:
+        Auto mode for measurements.
+        Options:
+
         "5MPS_LP0", "5MPS_LP1", "5MPS_LP2"
         "5MPS_LP3", "1MPS_LP0", "1MPS_LP1"
         "1MPS_LP2", "1MPS_LP3", "2MPS_LP0"
