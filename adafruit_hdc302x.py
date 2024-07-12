@@ -41,6 +41,7 @@ __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_HDC302x.git"
 class HDC302x:
     """Driver for the HDC302x temperature and humidity sensor."""
 
+    # Auto modes
     AUTO_MODES: Dict[str, int] = {
         "5MPS_LP0": 0x2032,
         "5MPS_LP1": 0x2024,
@@ -64,7 +65,7 @@ class HDC302x:
         "10MPS_LP3": 0x27FF,
         "EXIT_AUTO_MODE": 0x3093,
     }
-
+    # Heater power options
     HEATER_POWERS: Dict[str, int] = {
         "OFF": 0x0000,
         "QUARTER_POWER": 0x009F,
@@ -85,7 +86,7 @@ class HDC302x:
     @property
     def heater(self) -> bool:
         """
-        Check if the heater is on.
+        Heater power
 
         :return: True if the heater is on, False otherwise.
         """
@@ -95,8 +96,6 @@ class HDC302x:
     @heater.setter
     def heater(self, power: str) -> None:
         """
-        Set the heater power.
-
         :param power: The heater power level.
         """
         if power not in self.HEATER_POWERS:
@@ -130,7 +129,7 @@ class HDC302x:
     @property
     def nist_id(self) -> List[int]:
         """
-        Get the NIST ID of the sensor.
+        NIST ID of the sensor.
 
         :return: NIST ID as a list of integers.
         """
@@ -149,7 +148,7 @@ class HDC302x:
     @property
     def auto_mode(self) -> int:
         """
-        Current auto mode.
+        Auto mode for measurements.
 
         :return: The current auto mode.
         """
@@ -158,8 +157,6 @@ class HDC302x:
     @auto_mode.setter
     def auto_mode(self, mode: int) -> None:
         """
-        Set the auto mode.
-
         :param mode: The auto mode to set.
         """
         if mode not in self.AUTO_MODES:
@@ -171,7 +168,7 @@ class HDC302x:
     @property
     def offsets(self) -> Tuple[float, float]:
         """
-        Get the temperature and humidity offsets.
+        Set temperature and relative humidity offsets
 
         :return: The temperature and humidity offsets.
         """
@@ -185,8 +182,6 @@ class HDC302x:
     @offsets.setter
     def offsets(self, temp: float, humid: float) -> None:
         """
-        Set the temperature and humidity offsets.
-
         :param values: A tuple containing the temperature and humidity offsets.
         """
         rh_offset = self._calculate_offset(humid, False)
@@ -197,7 +192,7 @@ class HDC302x:
     @property
     def auto_temperature(self) -> float:
         """
-        Get the temperature in auto mode.
+        Read temperature in auto mode.
 
         :return: The temperature in degrees Celsius.
         """
@@ -207,7 +202,7 @@ class HDC302x:
     @property
     def auto_relative_humidity(self) -> float:
         """
-        Get the relative humidity in auto mode.
+        Read relative humidity in auto mode.
 
         :return: The relative humidity in percent.
         """
