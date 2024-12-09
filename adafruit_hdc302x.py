@@ -104,7 +104,6 @@ class HDC302x:
         if power not in self.HEATER_POWERS:
             raise ValueError("Invalid heater power value.")
         _power = self.HEATER_POWERS[power]
-        print(_power)
         if _power == self.HEATER_POWERS["OFF"]:
             self._write_command(0x3066)
         else:
