@@ -191,10 +191,11 @@ class HDC302x:
         )
 
     @offsets.setter
-    def offsets(self, temp: float, humid: float) -> None:
+    def offsets(self, values: Tuple[float, float]) -> None:
         """
         :param values: A tuple containing the temperature and humidity offsets.
         """
+        temp, humid = values  # Unpack tuple
         rh_offset = self._calculate_offset(humid, False)
         temp_offset = self._calculate_offset(temp, True)
         combined_offsets = (rh_offset << 8) | temp_offset
