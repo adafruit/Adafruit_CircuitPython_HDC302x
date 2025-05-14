@@ -5,7 +5,9 @@
 """HDC302x alerts example"""
 
 import time
+
 import board
+
 import adafruit_hdc302x
 
 i2c = board.I2C()

@@ -5,7 +5,9 @@
 """HDC302x simple test"""
 
 import time
+
 import board
+
 import adafruit_hdc302x
 
 i2c = board.I2C()

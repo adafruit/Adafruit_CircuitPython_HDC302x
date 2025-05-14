@@ -26,11 +26,12 @@ Implementation Notes
 """
 
 import struct
+
 import busio
 from adafruit_bus_device import i2c_device
 
 try:
-    from typing import Tuple, List, Dict
+    from typing import Dict, List, Tuple
 except ImportError:
     pass
 
@@ -186,9 +187,7 @@ class HDC302x:
         combined_offsets = self._read_command(0xA004)
         rh_offset = (combined_offsets >> 8) & 0xFF
         temp_offset = combined_offsets & 0xFF
-        return self._invert_offset(temp_offset, True), self._invert_offset(
-            rh_offset, False
-        )
+        return self._invert_offset(temp_offset, True), self._invert_offset(rh_offset, False)
 
     @offsets.setter
     def offsets(self, values: Tuple[float, float]) -> None:
@@ -304,15 +303,11 @@ class HDC302x:
     def _write_command_data(self, command: int, data: int) -> bool:
         crc = self._calculate_crc8(struct.pack(">H", data))
         with self.i2c_device as i2c:
-            i2c.write(
-                bytes([command >> 8, command & 0xFF, data >> 8, data & 0xFF, crc])
-            )
+            i2c.write(bytes([command >> 8, command & 0xFF, data >> 8, data & 0xFF, crc]))
 
     def _read_command(self, command: int) -> int:
         with self.i2c_device as i2c:
-            i2c.write_then_readinto(
-                bytes([command >> 8, command & 0xFF]), result := bytearray(3)
-            )
+            i2c.write_then_readinto(bytes([command >> 8, command & 0xFF]), result := bytearray(3))
         crc = self._calculate_crc8(result[:2])
         if crc != result[2]:
             raise RuntimeError("CRC check failed")
